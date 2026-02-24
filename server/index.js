@@ -9,6 +9,17 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+function crudLog(type, message) {
+  const now = new Date();
+  const ts = now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0') + ' ' +
+    String(now.getHours()).padStart(2, '0') + ':' +
+    String(now.getMinutes()).padStart(2, '0') + ':' +
+    String(now.getSeconds()).padStart(2, '0');
+  console.log(`[${ts}][${type}] ${message}`);
+}
+
 // DB setup
 const db = new Database(path.join(__dirname, 'todos.db'));
 
@@ -70,6 +81,7 @@ app.post('/api/todos', (req, res) => {
   ).run(title.trim(), description, priority, due_date);
 
   const todo = db.prepare('SELECT * FROM todos WHERE id = ?').get(result.lastInsertRowid);
+  crudLog('C', `할일 추가: "${todo.title}" (id=${todo.id})`);
   res.status(201).json({ ...todo, completed: todo.completed === 1 });
 });
 
@@ -93,6 +105,7 @@ app.patch('/api/todos/:id', (req, res) => {
   ).run(updated.title, updated.description, updated.priority, updated.due_date, updated.completed, req.params.id);
 
   const result = db.prepare('SELECT * FROM todos WHERE id = ?').get(req.params.id);
+  crudLog('U', `할일 수정: "${result.title}" (id=${result.id})`);
   res.json({ ...result, completed: result.completed === 1 });
 });
 
@@ -101,6 +114,7 @@ app.delete('/api/todos/:id', (req, res) => {
   const todo = db.prepare('SELECT * FROM todos WHERE id = ?').get(req.params.id);
   if (!todo) return res.status(404).json({ error: 'Not found' });
   db.prepare('DELETE FROM todos WHERE id = ?').run(req.params.id);
+  crudLog('D', `할일 삭제: "${todo.title}" (id=${todo.id})`);
   res.json({ success: true });
 });
 
