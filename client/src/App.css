@@ -1,0 +1,88 @@
+.app {
+  min-height: 100vh;
+  background: #f7f7f8;
+}
+
+.app-header {
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  color: #111;
+}
+
+.header-stats {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+}
+
+.stat {
+  font-size: 13px;
+  color: #888;
+}
+
+.stat.overdue {
+  color: #e53e3e;
+  font-weight: 500;
+}
+
+.btn-add {
+  padding: 8px 16px;
+  background: #111;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.btn-add:hover {
+  background: #333;
+}
+
+.app-main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loading, .empty {
+  text-align: center;
+  padding: 60px 20px;
+  color: #aaa;
+  font-size: 14px;
+}
+
+.empty p {
+  margin-bottom: 12px;
+}
+
+.btn-link {
+  color: #111;
+  font-size: 13px;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
